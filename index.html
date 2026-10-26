@@ -9,36 +9,26 @@
 <body>
 <main>
   <h1>Padrão de nome de oferta</h1>
-  <p class="sub">Escolha uma tag por linha, de cima para baixo. A observação é opcional.</p>
+  <p class="sub">Escolha uma tag por coluna, de cima para baixo. A observação é opcional.</p>
   <section class="resultado" aria-live="polite">
     <small>Nome padrão</small>
     <div id="nome"></div>
-    <div class="aviso" id="status"></div>
     <div class="acoes">
       <button id="gerar" class="p" disabled>Gerar nome e Id</button>
       <button id="copiar" disabled>Copiar</button>
       <button id="limpar">Limpar</button>
     </div>
   </section>
-  <fieldset class="obs">
-    <legend><label for="resp">Seu nome (obrigatório)</label></legend>
-    <input id="resp" autocomplete="name" placeholder="Ex.: Tatiana">
-  </fieldset>
   <div id="campos"></div>
   <fieldset class="obs">
     <legend><label for="obs">Observação (opcional)</label></legend>
     <input id="obs" maxlength="40" autocomplete="off" placeholder="Ex.: COCACOLA">
     <div class="aviso" id="aviso"></div>
   </fieldset>
-  <h2>Nomes já gerados</h2>
-  <div class="acoes">
-    <input id="busca" class="busca" placeholder="Buscar por nome ou responsável" aria-label="Buscar">
-    <button id="atualizar">Atualizar lista</button>
-    <button id="exportar">Exportar CSV</button>
-  </div>
-  <table id="hist"><thead><tr><th>Nome</th><th>Responsável</th><th>Gerado em</th></tr></thead><tbody></tbody></table>
+  <h2>Nomes gerados neste navegador</h2>
+  <button id="exportar">Exportar CSV</button>
+  <table id="hist"><thead><tr><th>Nome</th><th>Gerado em</th></tr></thead><tbody></tbody></table>
 </main>
-<script src="config.js"></script>
 <script src="dados.js"></script>
 <script src="app.js"></script>
 </body>

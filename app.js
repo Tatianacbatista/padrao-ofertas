@@ -44,7 +44,7 @@
       ? "A observação foi ajustada: sem acento, espaço ou hífen, até 20 caracteres." : "";
     // Prévia usa o próximo Id sem consumi-lo
     const prox = formatarId(ler(CHAVE_ID, 0) + 1);
-    nomeEl.textContent = completo ? montar(e, prox, obs) : "Selecione uma tag em cada coluna";
+    nomeEl.textContent = completo ? montar(e, prox, obs) : "Selecione uma tag em cada linha";
     btnGerar.disabled = !completo;
     btnCopiar.disabled = !completo;
   }

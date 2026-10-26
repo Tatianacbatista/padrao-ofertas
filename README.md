@@ -1,19 +1,11 @@
 # padrao-ofertas
-MVP do gerador de nome padrão de oferta (HTML + CSS + JS, sem dependências).
+Gerador de nome padrão de oferta (HTML + CSS + JS, sem dependências).
 
 Fórmula: `[Ação]-[Origem].[Segmento].[Vigência].[Detalhe].[Abrangência]-[Id]-[Observação]`
 
-## Rodar localmente
-Abra `index.html` no navegador.
+Id (4 caracteres): dia do mês (1) + inicial do nome de quem gerou (1) + 2 aleatórios.
+Dia: 1-9 = dias 1 a 9; A=10, B=11, ... V=31.
+Exemplo: `Oferta-IC.1.FD.RE.L01-QTK7-COCACOLA` (dia 26, Tatiana, sorteio K7)
 
-## Publicar no GitHub Pages
-git add . && git commit -m "MVP padrao-ofertas" && git branch -M main
-git remote add origin https://github.com/<usuario>/padrao-ofertas.git && git push -u origin main
-No GitHub: Settings > Pages > Branch main, pasta /(root).
-
-## Atualizar códigos
-Edite `dados.js` com os códigos da planilha oficial.
-
-## Limite do MVP
-O Id sequencial fica no navegador (localStorage); não é compartilhado entre usuários.
-Para Id único global é preciso um back-end ou planilha/ERP central.
+Arquivos: index.html, style.css, app.js, dados.js (códigos), config.js (URL do Apps Script), Code.gs (script da planilha).
+Sem URL no config.js o site funciona em modo local (nomes só no navegador).

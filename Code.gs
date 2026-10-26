@@ -1,5 +1,5 @@
-// Apps Script ligado a uma planilha do Google. Guarda todos os nomes gerados
-// e controla o Id sequencial central (nunca repete, mesmo com vários usuários).
+// Google Apps Script ligado a uma planilha do Google (Google Sheets / Planilhas Google).
+// Guarda todos os nomes gerados e recusa Ids repetidos.
 const ABA = "Ofertas";
 
 function aba_() {
@@ -23,20 +23,21 @@ function doGet() {                       // lista os 500 nomes mais recentes
   const v = s.getRange(ini, 1, n - ini + 1, 11).getValues().reverse();
   return json_({ itens: v.map(r => ({ id: r[0], nome: r[1], resp: r[9], data: r[10] })) });
 }
-function doPost(e) {                     // gera o Id e grava a linha
+function doPost(e) {                     // grava o nome (o Id vem da página)
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
     const d = JSON.parse(e.postData.contents), c = d.campos || {};
-    const p = PropertiesService.getScriptProperties();
-    const num = (Number(p.getProperty("ultimoId")) || 0) + 1;
-    p.setProperty("ultimoId", String(num));
-    const id = num < 1000 ? ("00" + num).slice(-3) : String(num);
-    const nome = String(d.nome).replace("{ID}", id);
+    if (!/^[A-Z0-9]{4}$/.test(String(d.id))) return json_({ erro: "Id inválido" });
+    const s = aba_(), n = s.getLastRow();
+    if (n > 1) {
+      const ids = s.getRange(2, 1, n - 1, 1).getValues().flat();
+      if (ids.indexOf(d.id) > -1) return json_({ duplicado: true });
+    }
     const data = Utilities.formatDate(new Date(), "America/Sao_Paulo", "dd/MM/yyyy HH:mm");
-    aba_().appendRow([id, nome, c.acao, c.origem, c.segmento, c.vigencia, c.detalhe,
-                      c.abrangencia, d.obs || "", d.resp || "", data]);
-    return json_({ id: id, nome: nome, data: data });
+    s.appendRow([d.id, String(d.nome), c.acao, c.origem, c.segmento, c.vigencia, c.detalhe,
+                 c.abrangencia, d.obs || "", d.resp || "", data]);
+    return json_({ id: d.id, nome: d.nome, data: data });
   } catch (err) {
     return json_({ erro: String(err) });
   } finally {
